@@ -1,20 +1,18 @@
-# Use the official Python image from the Docker Hub
-FROM python:3.10-slim
+# Use the official Python image.
+FROM python:3.9
 
-# Set the working directory in the container
+# Set the working directory in the container.
 WORKDIR /app
 
-# Copy the requirements file into the container
+# Install dependencies.
 COPY requirements.txt /app/
-
-# Install any dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the application code
+# Copy the Django project files into the container.
 COPY . /app/
 
-# Expose the port the app runs on
+# Expose port 8000 for the application.
 EXPOSE 8000
 
-# Command to run the application
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "course_manager_backend.wsgi:application"]
+# Run the Gunicorn server.
+CMD ["gunicorn", "course_manager_backend.wsgi:application", "--bind", "0.0.0.0:8000"]

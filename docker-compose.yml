@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./course_manager_backend
+    image: your-dockerhub-username/backend:latest
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=course_manager_backend.settings
+    volumes:
+      - ./course_manager_backend:/app
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./course-management
+    image: your-dockerhub-username/frontend:latest
+    ports:
+      - "5000:5000"
+    depends_on:
+      - backend
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: your_db_name
+      POSTGRES_USER: your_db_user
+      POSTGRES_PASSWORD: your_db_password
+    ports:
+      - "5432:5432"

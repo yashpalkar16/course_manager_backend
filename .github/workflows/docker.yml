@@ -13,14 +13,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: List directory contents
+        run: |
+          ls -la ./course_manager_backend
+          ls -la ./course-management
+
       - name: Build and push backend Docker image
         run: |
-          docker build -t your-dockerhub-username/backend:latest ./course_manager_backend
+          docker build -t your-dockerhub-username/backend:latest -f ./course_manager_backend/Dockerfile ./course_manager_backend
           echo ${{ secrets.DOCKER_HUB_PASSWORD }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
           docker push your-dockerhub-username/backend:latest
 
       - name: Build and push frontend Docker image
         run: |
-          docker build -t your-dockerhub-username/frontend:latest ./course-management
+          docker build -t your-dockerhub-username/frontend:latest -f ./course-management/Dockerfile ./course-management
           echo ${{ secrets.DOCKER_HUB_PASSWORD }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
           docker push your-dockerhub-username/frontend:latest

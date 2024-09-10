@@ -1,4 +1,4 @@
-# Put the .github folder in the parent directory where both the frontend and backend folders are present
+# Put the .github folder in the parent directory where both the frontend and backend folders are present and then the project will run fine
 name: Build and Push Docker Images
 
 on:
